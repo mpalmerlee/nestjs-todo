@@ -7,8 +7,8 @@ async function bootstrap() {
   app.enableCors();
 
   const options = new DocumentBuilder()
-    .setTitle("TODO example")
-    .setDescription("The todo API description")
+    .setTitle("NestJS Todo example")
+    .setDescription("The todos API description")
     .setVersion("1.0")
     .addTag("todo")
     .build();

@@ -1,5 +1,5 @@
 {
-  "name": "nestjs-todo",
+  "name": "todos",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -23,7 +23,7 @@
     "@nestjs/common": "^6.7.2",
     "@nestjs/core": "^6.7.2",
     "@nestjs/platform-express": "^6.7.2",
-    "@nestjs/swagger": "^4.2.0",
+    "@nestjs/swagger": "^4.2.1",
     "@nestjs/typeorm": "^6.2.0",
     "@nestjsx/crud": "^4.4.1",
     "@nestjsx/crud-typeorm": "^4.4.1",
