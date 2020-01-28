@@ -360,16 +360,44 @@ Refresh our swagger page: http://localhost:3000/api/ and notice how we now have 
 Run tests to check out what we have
 
 ```
-npm test
+$ npm test
 ```
 
-You'll notice some failues in the boilerplate tests, which I spent time trying to fix just to show it running using the mock repository methods shown in these links:
-https://github.com/nestjsx/crud/issues/325
-https://github.com/nestjsx/crud/issues/207
-https://github.com/nestjsx/crud/issues/33
-https://stackoverflow.com/questions/52797727/process-of-testing-with-typeorm-and-nestjs-and-jest-using-mocks
+You'll notice some failues in the boilerplate tests, which I spent time trying to fix, the documentation is a bit sparse on the proper fix to make this work, but essentially you need to have your `createTestingModule` mirror what the real module should do:
+https://github.com/nestjs/nest/issues/2450
 
-However I didn't have enough time to figure it out, and since all of this is boilerplate anyways, let's just remove those test files since the libraries we are using have tests against thier core components. We would want to add tests for our domain/business logic, not additional tests that are all mocked out versions of our stubs.
+So we need to add this bit for both todos.controller.spec.ts and todos.service.spec.ts:
+```
+const module: TestingModule = await Test.createTestingModule({
+      imports: [TypeOrmModule.forRoot(), TypeOrmModule.forFeature([Todo])],
+      providers: [TodosService],
+      controllers: [TodosController]
+    }).compile();
+```
+
+Finally when we run tests again, we notice that there is a missing configuration file that TypeORM expects, we can make this automatic by setting up the configuration module in Nest and by following the techniques in this article:
+https://medium.com/@gausmann.simon/nestjs-typeorm-and-postgresql-full-example-development-and-project-setup-working-with-database-c1a2b1b11b8f
+
+For now we can just create an ormconfig.json file with the following contents:
+```
+{
+  "type": "postgres",
+  "host": "127.0.0.1",
+  "port": 5432,
+  "username": "postgres",
+  "password": "postgres",
+  "database": "todo",
+  "entities": ["**/*.entity{.ts,.js}"],
+  "migrations": ["src/migration/*.ts"],
+  "cli": {
+    "migrationsDir": "src/migration"
+  },
+  "synchronize": true,
+  "logging": false,
+  "ssl": false
+}
+
+```
 
 # Let's see this api in our frontend
 
