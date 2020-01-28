@@ -1,0 +1,16 @@
+{
+  "type": "postgres",
+  "host": "127.0.0.1",
+  "port": 5432,
+  "username": "postgres",
+  "password": "postgres",
+  "database": "todo",
+  "entities": ["**/*.entity{.ts,.js}"],
+  "migrations": ["src/migration/*.ts"],
+  "cli": {
+    "migrationsDir": "src/migration"
+  },
+  "synchronize": true,
+  "logging": false,
+  "ssl": false
+}
